@@ -88,3 +88,38 @@
     color: #555;
   }
 }
+
+/* Add item form styles */
+.add-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.add-form input,
+.add-form select {
+  padding: 8px 10px;
+  border: 1px solid #d9e0ea;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.add-form button {
+  padding: 8px 12px;
+  border: none;
+  background: #1a7f37;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.add-form button:hover {
+  background: #16672e;
+}
+
+.error {
+  color: #b12b2b;
+  padding: 8px 0;
+}
