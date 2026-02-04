@@ -6,6 +6,7 @@ const InventoryList = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const fetchInventory = async () => {
     try {
@@ -39,6 +40,7 @@ const InventoryList = () => {
       return;
     }
 
+    setSubmitting(true);
     try {
       const res = await fetch('http://localhost:4000/inventory', {
         method: 'POST',
@@ -46,11 +48,13 @@ const InventoryList = () => {
         body: JSON.stringify({ name, category, quantity, status })
       });
       if (!res.ok) throw new Error('Failed to add item');
-      const newItem = await res.json();
-      setItems(prev => [...prev, newItem]);
+      // Refresh the list to stay in sync with server
+      await fetchInventory();
       form.reset();
     } catch (err) {
       alert(err.message);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -69,7 +73,7 @@ const InventoryList = () => {
           <option>Available</option>
           <option>Unavailable</option>
         </select>
-        <button type="submit">Add Item</button>
+        <button type="submit" disabled={submitting}>{submitting ? 'Adding...' : 'Add Item'}</button>
       </form>
 
       <div className="table-wrap">
